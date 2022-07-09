@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:object="${business}">
+        <h1 th:text="${business.getBusinessName()}">  </h1>
+</form>
+
+<th:block th:each="i : ${business.getBusinessToDoList()}">
+    <form th:action="@{/deleteNote(noteToDelete=${i.getUid()},businessIdToDeleteNote=${business.getUid()})}" th:method="get" >
+        <div >
+            <span th:text="${i.getNote()}"> </span>
+            <input th:type="hidden" name="noteToDelete" th:value="${i.getUid()}">
+            <input th:type="hidden" name="businessIdToDeleteNote" th:value="${business.getUid()}">
+            <input type="submit" value="delete" th:method="post">
+        </div>
+    </form>
+</th:block>
+
+<th:block th:object="${business}" >
+    <form th:action="@{/noteAdd}" method="post">
+        <div>
+            <label>Enter your note:
+                <input type="text" placeholder="Your note here" name="note"/>
+                <input type="hidden" th:value="${business.getUid()}" name="businessId">
+                <input type="submit" value="create"  name="noteButton"/>
+            </label>
+        </div>
+    </form>
+</th:block>
+<br/>
+<form th:action="@{/}" method="get">
+    <div><label>Return to home page <input type="submit" value="Return to homepage" name="return" /></label></div>
+</form>
+
+</body>
+</html>

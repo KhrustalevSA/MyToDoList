@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Go to authorization</title>
+</head>
+<body>
+<h1>Hello</h1>
+<h1 th:text="${user.getUserName()}">  </h1>
+
+<th:block th:each="i: ${businessList}">
+    <form th:action="@{/noteAdd(businessId=${i.getUid()})}" method="get">
+        <input type="hidden" name="businessId" th:value="${i.getUid()}">
+        <input type="submit" name="enterBusinessButton" th:value="${i.getBusinessName()}">
+    </form>
+</th:block>
+
+<br/>
+<form action="/businessAdd">
+    <button type="submit">Add new business</button>
+</form>
+
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>

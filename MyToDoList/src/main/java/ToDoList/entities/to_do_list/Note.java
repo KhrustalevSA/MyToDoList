@@ -14,11 +14,15 @@ public class Note {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "isDone")
+    private boolean isDone;
+
     @ManyToOne
     @JoinColumn(name="business_id")
     private Business business;
 
     public Note() {
+        this.isDone = false;
     }
 
     public Note(String note) {
@@ -49,5 +53,12 @@ public class Note {
     }
     public void setBusiness(Business business) {
         this.business = business;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+    public void setDone(boolean done) {
+        isDone = done;
     }
 }

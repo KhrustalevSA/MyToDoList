@@ -12,14 +12,43 @@
 </form>
 
 <th:block th:each="i : ${business.getBusinessToDoList()}">
-    <form th:action="@{/deleteNote(noteToDelete=${i.getUid()},businessIdToDeleteNote=${business.getUid()})}" th:method="get" >
-        <div >
-            <span th:text="${i.getNote()}"> </span>
-            <input th:type="hidden" name="noteToDelete" th:value="${i.getUid()}">
-            <input th:type="hidden" name="businessIdToDeleteNote" th:value="${business.getUid()}">
-            <input type="submit" value="delete" th:method="post">
-        </div>
-    </form>
+
+    <label>
+        <span th:text="${i.getNote()}" > </span>
+        <span th:if="${i.isDone()}" th:text="Done" > </span>
+
+        <form th:action="@{/setDoneOrNot(noteToDelete=${i.getUid()},businessIdToDeleteNote=${business.getUid()},isDone=${i.isDone()})}" th:method="get" >
+
+            <div th:if="${i.isDone()}">
+                <label text="Done"></label>
+                <input th:type="hidden" name="noteToDelete" th:value="${i.getUid()}">
+                <input th:type="hidden" name="businessIdToDeleteNote" th:value="${business.getUid()}">
+                <input th:type="hidden" name="isDone" th:value="${i.isDone()}">
+                <input type="submit" name="isDoneButton" value="make it did't done" th:method="post">
+
+            </div>
+            <div th:unless="${i.isDone()}">
+                <label text="Did't done"></label>
+                <input th:type="hidden" name="noteToDelete" th:value="${i.getUid()}">
+                <input th:type="hidden" name="businessIdToDeleteNote" th:value="${business.getUid()}">
+                <input th:type="hidden" name="isDone" th:value="${i.isDone()}">
+                <input type="submit" name="isDoneButton" value="make it done" th:method="post">
+
+            </div>
+        </form>
+
+        <form th:action="@{/deleteNote(noteToDelete=${i.getUid()},businessIdToDeleteNote=${business.getUid()})}" th:method="get" >
+            <div >
+
+
+                <input th:type="hidden" name="noteToDelete" th:value="${i.getUid()}">
+                <input th:type="hidden" name="businessIdToDeleteNote" th:value="${business.getUid()}">
+                <input type="submit" value="delete" th:method="post">
+            </div>
+        </form>
+        <br/>
+        <br/>
+    </label>
 </th:block>
 
 <th:block th:object="${business}" >

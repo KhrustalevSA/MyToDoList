@@ -122,4 +122,30 @@ public class MainController {
         return "note_add";
     }
 
+    @GetMapping("setDoneOrNot")
+    public String setIsDoneField(@RequestParam(name = "noteToDelete") Long noteToDeleteId,
+                                 @RequestParam(name = "businessIdToDeleteNote")Long businessId,
+                                 @RequestParam(name = "isDone") boolean doneOrNot,
+                                 Model model){
+
+        Optional<Note> noteOptional = noteRepository.findById(noteToDeleteId);
+        Note note = noteOptional.get();
+        Optional<Business> businessOptional = businessRepository.findById(businessId);
+        Business business = businessOptional.get();
+        boolean isDone = !doneOrNot;
+        note.setDone(isDone);
+        noteRepository.save(note);
+
+
+//        List<Note> list = business.getBusinessToDoList();
+//        list.remove(note);
+//        noteRepository.delete(note);
+//        business.setBusinessToDoList(list);
+//        businessRepository.save(business);
+
+        model.addAttribute("business",business);
+        model.addAttribute("noteRepository",noteRepository);
+        return "note_add";
+    }
+
 }

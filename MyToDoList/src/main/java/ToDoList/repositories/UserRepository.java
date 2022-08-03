@@ -6,5 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+//    @Query("select distinct * from users where id=1")
+//    User getUser(String userName);
+
     User findByUserName(String username);
+//    User findByUserName(String username,String name);
 }

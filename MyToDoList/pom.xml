@@ -18,19 +18,58 @@
     <name>my-todolist</name>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <deploy.jboss.host>127.0.0.1</deploy.jboss.host>
-        <deploy.jboss.port>9990</deploy.jboss.port>
-        <deploy.jboss.username>hsa</deploy.jboss.username>
-        <deploy.jboss.password>hsa</deploy.jboss.password>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.5.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId> <!-- Need to read about this -->
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId> <!-- Need to read about this, needed for JSP -->
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>8.5.16</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ### Необходим для компиляции JSP (need to read) -->
+        <dependency>
+            <groupId>org.eclipse.jdt.core.compiler</groupId>
+            <artifactId>ecj</artifactId>
+            <version>4.6.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.6.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>2.6.6</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -71,20 +110,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.6</version>
             </plugin>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>2.0.2.Final</version>
 
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.5.v20120716</version>
                 <configuration>
-                    <filename>${project.build.finalName}.war</filename>
-                    <hostname>${deploy.jboss.host}</hostname>
-                    <port>${deploy.jboss.port}</port>
-                    <username>${deploy.jboss.username}</username>
-                    <password>${deploy.jboss.password}</password>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <stopKey/>
+                    <stopPort/>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
             </plugin>
         </plugins>
     </build>
+
+
 </project>

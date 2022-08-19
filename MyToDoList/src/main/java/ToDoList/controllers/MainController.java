@@ -148,4 +148,10 @@ public class MainController {
         return "note_add";
     }
 
+    @GetMapping("/index")
+    public String getJspIndexPage(Model model) {
+
+        return "index";
+    }
+
 }
